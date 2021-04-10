@@ -8,22 +8,28 @@ namespace CryptoManagerAPI.Models
 {
     public class ExistingInvestment
     {
-        [JsonProperty(PropertyName = "photoCount")]
-        public int PhotoCount { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int ID { get; set; }
 
-        [JsonProperty(PropertyName = "photoCount")]
-        public int test1 { get; set; }
+        [JsonProperty(PropertyName = "userID")]
+        public string UserID { get; set; }
 
-        [JsonProperty(PropertyName = "photoCount")]
-        public int test2 { get; set; }
+        [JsonProperty(PropertyName = "assetID")]
+        public string AssetID { get; set; }
 
-        [JsonProperty(PropertyName = "photoCount")]
-        public int test3 { get; set; }
+        [JsonProperty(PropertyName = "amountUSD")]
+        public decimal AmountUSD { get; set; }
 
-        [JsonProperty(PropertyName = "photoCount")]
-        public int test4 { get; set; }
+        [JsonProperty(PropertyName = "quantity")]
+        public decimal Quantity { get; set; }
 
-        [JsonProperty(PropertyName = "photoCount")]
-        public int test { get; set; }
+        [JsonProperty(PropertyName = "entryDt")]
+        public DateTime EntryDt { get; set; }
+
+        [JsonProperty(PropertyName = "modifyDt")]
+        public DateTime ModifyDt { get; set; }
+
+        [JsonProperty(PropertyName = "partition")]
+        public int Partition { get; set; }
     }
 }

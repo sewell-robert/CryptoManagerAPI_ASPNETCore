@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PhotoContestAPI.Models;
+using CryptoManagerAPI.Models;
 
 namespace PhotoContestAPI.Services
 {
     public interface ICosmosDbService
     {
-        Task<IEnumerable<PhotoData>> GetItemsAsync(string query);
-        Task<PhotoData> GetItemAsync(string id);
-        Task AddItemAsync(PhotoData photoData);
-        Task UpdateItemAsync(PhotoData photoData);
+        Task<IEnumerable<ExistingInvestment>> GetItemsAsync(string query);
+        Task<ExistingInvestment> GetItemAsync(string id);
+        Task AddItemAsync(ExistingInvestment investment);
+        Task UpdateItemAsync(ExistingInvestment investment);
         Task DeleteItemAsync(string id);
     }
 }
