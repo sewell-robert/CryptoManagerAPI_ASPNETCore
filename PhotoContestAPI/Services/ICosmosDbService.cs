@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using CryptoManagerAPI.Models;
 
-namespace PhotoContestAPI.Services
+namespace CryptoManagerAPI.Services
 {
     public interface ICosmosDbService
     {

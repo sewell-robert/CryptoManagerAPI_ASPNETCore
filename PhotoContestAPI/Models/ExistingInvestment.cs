@@ -9,7 +9,7 @@ namespace CryptoManagerAPI.Models
     public class ExistingInvestment
     {
         [JsonProperty(PropertyName = "id")]
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         [JsonProperty(PropertyName = "userID")]
         public string UserID { get; set; }
@@ -23,13 +23,16 @@ namespace CryptoManagerAPI.Models
         [JsonProperty(PropertyName = "quantity")]
         public decimal Quantity { get; set; }
 
+        [JsonProperty(PropertyName = "averagePrice")]
+        public decimal AveragePrice { get; set; }
+
         [JsonProperty(PropertyName = "entryDt")]
         public DateTime EntryDt { get; set; }
 
         [JsonProperty(PropertyName = "modifyDt")]
         public DateTime ModifyDt { get; set; }
 
-        [JsonProperty(PropertyName = "partition")]
+        [JsonProperty(PropertyName = "Partition")]
         public int Partition { get; set; }
     }
 }

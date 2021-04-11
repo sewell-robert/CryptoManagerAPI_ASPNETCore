@@ -1,6 +1,6 @@
 ﻿using CryptoManagerAPI.Models;
+using CryptoManagerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using PhotoContestAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +18,14 @@ namespace CryptoManagerAPI.Controllers
             _cosmosDbService = cosmosDbService;
         }
 
+        [HttpGet]
+        public bool Get()
+        {
+            return true;
+        }
+
         [HttpPost]
-        public async Task<bool> Post([FromForm] string userID, [FromForm] string assetID,
-            [FromForm] string amountUSD, [FromForm] string quantity)
+        public async Task<bool> Post([FromForm] string userID, [FromForm] string assetID, [FromForm] string amountUSD, [FromForm] string quantity, [FromForm] string averagePrice)
         {
             bool isSuccessful = false;
 
@@ -28,11 +33,12 @@ namespace CryptoManagerAPI.Controllers
             {
                 var investment = new ExistingInvestment
                 {
-                    ID = 1,
-                    UserID = "rsewell",
-                    AssetID = "Cardano Ada",
+                    ID = "1",
+                    UserID = userID,
+                    AssetID = assetID,
                     AmountUSD = 1000.00M,
                     Quantity = 10,
+                    AveragePrice = 10,
                     EntryDt = DateTime.Now,
                     ModifyDt = DateTime.Now,
                     Partition = 1

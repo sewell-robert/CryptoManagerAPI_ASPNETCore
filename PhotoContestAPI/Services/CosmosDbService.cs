@@ -6,7 +6,7 @@ using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Configuration;
 using CryptoManagerAPI.Models;
 
-namespace PhotoContestAPI.Services
+namespace CryptoManagerAPI.Services
 {
     public class CosmosDbService : ICosmosDbService
     {
@@ -22,6 +22,9 @@ namespace PhotoContestAPI.Services
 
         public async Task AddItemAsync(ExistingInvestment investment)
         {
+            ContainerProperties properties = await _container.ReadContainerAsync();
+            var path = properties.PartitionKeyPath;
+
             await this._container.CreateItemAsync<ExistingInvestment>(investment, new PartitionKey(investment.Partition));
         }
 
