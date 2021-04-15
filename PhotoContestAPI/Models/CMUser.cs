@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CryptoManagerAPI.Models
 {
-    public class ExistingInvestment
+    public class CMUser
     {
         [JsonProperty(PropertyName = "id")]
         public string ID { get; set; }
@@ -14,23 +14,17 @@ namespace CryptoManagerAPI.Models
         [JsonProperty(PropertyName = "dbGrouping")]
         public string DbGrouping { get; set; }
 
-        [JsonProperty(PropertyName = "investmentID")]
-        public string InvestmentID { get; set; }
-
         [JsonProperty(PropertyName = "userID")]
         public string UserID { get; set; }
 
-        [JsonProperty(PropertyName = "assetID")]
-        public string AssetID { get; set; }
+        [JsonProperty(PropertyName = "email")]
+        public string Email { get; set; }
 
-        [JsonProperty(PropertyName = "amountUSD")]
-        public decimal AmountUSD { get; set; }
+        [JsonProperty(PropertyName = "username")]
+        public string Username { get; set; }
 
-        [JsonProperty(PropertyName = "quantity")]
-        public decimal Quantity { get; set; }
-
-        [JsonProperty(PropertyName = "averagePrice")]
-        public decimal AveragePrice { get; set; }
+        [JsonProperty(PropertyName = "password")]
+        public decimal Password { get; set; }
 
         [JsonProperty(PropertyName = "entryDt")]
         public DateTime EntryDt { get; set; }

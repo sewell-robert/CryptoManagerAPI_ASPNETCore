@@ -34,6 +34,8 @@ namespace CryptoManagerAPI.Controllers
                 var investment = new ExistingInvestment
                 {
                     ID = "1",
+                    DbGrouping = "ExistingInvestment",
+                    InvestmentID = "1",
                     UserID = userID,
                     AssetID = assetID,
                     AmountUSD = 1000.00M,
@@ -41,10 +43,10 @@ namespace CryptoManagerAPI.Controllers
                     AveragePrice = 10,
                     EntryDt = DateTime.Now,
                     ModifyDt = DateTime.Now,
-                    Partition = 1
+                    PartitionKey = 1
                 };
 
-                await _cosmosDbService.AddItemAsync(investment);
+                await _cosmosDbService.AddItemAsync(investment, "ExistingInvestment");
 
                 //get the newly created PhotoData object to send back in POST reponse
                 isSuccessful = true;

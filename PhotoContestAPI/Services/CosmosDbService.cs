@@ -20,12 +20,27 @@ namespace CryptoManagerAPI.Services
             this._container = dbClient.GetContainer(databaseName, containerName);
         }
 
-        public async Task AddItemAsync(ExistingInvestment investment)
+        public async Task AddItemAsync(object obj, string dbGrouping)
         {
             ContainerProperties properties = await _container.ReadContainerAsync();
             var path = properties.PartitionKeyPath;
 
-            await this._container.CreateItemAsync<ExistingInvestment>(investment, new PartitionKey(investment.Partition));
+            if (dbGrouping == "ExistingInvestment")
+            {
+                ExistingInvestment investment = new ExistingInvestment();
+
+                investment = (ExistingInvestment)obj;
+
+                await this._container.CreateItemAsync<ExistingInvestment>(investment, new PartitionKey(investment.PartitionKey));
+            }
+            else if (dbGrouping == "User")
+            {
+                CMUser user = new CMUser();
+
+                user = (CMUser)obj;
+
+                await this._container.CreateItemAsync<CMUser>(user, new PartitionKey(user.PartitionKey));
+            }       
         }
 
         public async Task DeleteItemAsync(string id)
@@ -60,9 +75,24 @@ namespace CryptoManagerAPI.Services
             return results;
         }
 
-        public async Task UpdateItemAsync(ExistingInvestment investment)
+        public async Task UpdateItemAsync(object obj, string dbGrouping)
         {
-            await this._container.UpsertItemAsync<ExistingInvestment>(investment, new PartitionKey(investment.Partition));
+            if (dbGrouping == "ExistingInvestment")
+            {
+                ExistingInvestment investment = new ExistingInvestment();
+
+                investment = (ExistingInvestment)obj;
+
+                await this._container.UpsertItemAsync<ExistingInvestment>(investment, new PartitionKey(investment.PartitionKey));
+            }
+            else if (dbGrouping == "User")
+            {
+                CMUser user = new CMUser();
+
+                user = (CMUser)obj;
+
+                await this._container.UpsertItemAsync<CMUser>(user, new PartitionKey(user.PartitionKey));
+            }
         }
     }
 }

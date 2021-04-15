@@ -8,8 +8,8 @@ namespace CryptoManagerAPI.Services
     {
         Task<IEnumerable<ExistingInvestment>> GetItemsAsync(string query);
         Task<ExistingInvestment> GetItemAsync(string id);
-        Task AddItemAsync(ExistingInvestment investment);
-        Task UpdateItemAsync(ExistingInvestment investment);
+        Task AddItemAsync(object obj, string dbGrouping);
+        Task UpdateItemAsync(object obj, string dbGrouping);
         Task DeleteItemAsync(string id);
     }
 }
