@@ -61,10 +61,11 @@ namespace CryptoManagerAPI.Services
             }
         }
 
-        public async Task<IEnumerable<ExistingInvestment>> GetItemsAsync(string queryString)
+        public async Task<IEnumerable<object>> GetItemsAsync(string queryString)
         {
-            var query = this._container.GetItemQueryIterator<ExistingInvestment>(new QueryDefinition(queryString));
-            List<ExistingInvestment> results = new List<ExistingInvestment>();
+            var query = this._container.GetItemQueryIterator<object>(new QueryDefinition(queryString));
+
+            List<object> results = new List<object>();
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
