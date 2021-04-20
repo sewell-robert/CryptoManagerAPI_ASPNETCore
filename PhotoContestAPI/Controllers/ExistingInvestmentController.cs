@@ -48,7 +48,6 @@ namespace CryptoManagerAPI.Controllers
 
                 await _cosmosDbService.AddItemAsync(investment, "ExistingInvestment");
 
-                //get the newly created PhotoData object to send back in POST reponse
                 isSuccessful = true;
             }
             catch (System.Exception ex)

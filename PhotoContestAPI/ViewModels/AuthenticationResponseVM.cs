@@ -8,7 +8,11 @@ namespace CryptoManagerAPI.ViewModels
 {
     public class AuthenticationResponseVM
     {
+        [JsonProperty(PropertyName = "isSuccess")]
+        public bool? IsSuccess { get; set; }
+
+
         [JsonProperty(PropertyName = "isUserAuthenticated")]
-        public bool IsUserAuthenticated { get; set; }
+        public bool? IsUserAuthenticated { get; set; }
     }
 }
