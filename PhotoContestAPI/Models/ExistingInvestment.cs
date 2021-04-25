@@ -14,23 +14,23 @@ namespace CryptoManagerAPI.Models
         [JsonProperty(PropertyName = "dbGrouping")]
         public string DbGrouping { get; set; }
 
-        [JsonProperty(PropertyName = "investmentID")]
-        public string InvestmentID { get; set; }
-
         [JsonProperty(PropertyName = "userID")]
         public string UserID { get; set; }
 
-        [JsonProperty(PropertyName = "assetID")]
-        public string AssetID { get; set; }
+        [JsonProperty(PropertyName = "assetName")]
+        public string AssetName { get; set; }
+
+        [JsonProperty(PropertyName = "assetSymbol")]
+        public string AssetSym { get; set; }
 
         [JsonProperty(PropertyName = "amountUSD")]
-        public decimal AmountUSD { get; set; }
-
-        [JsonProperty(PropertyName = "quantity")]
-        public decimal Quantity { get; set; }
+        public string AmountUSD { get; set; }
 
         [JsonProperty(PropertyName = "averagePrice")]
-        public decimal AveragePrice { get; set; }
+        public string AveragePrice { get; set; }
+
+        [JsonProperty(PropertyName = "quantity")]
+        public string Quantity { get; set; }
 
         [JsonProperty(PropertyName = "entryDt")]
         public DateTime EntryDt { get; set; }

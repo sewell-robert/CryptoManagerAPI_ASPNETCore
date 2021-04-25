@@ -25,22 +25,31 @@ namespace CryptoManagerAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<bool> Post([FromForm] string userID, [FromForm] string assetID, [FromForm] string amountUSD, [FromForm] string quantity, [FromForm] string averagePrice)
+        public async Task<bool> Post([FromForm] string userID, [FromForm] string assetName, [FromForm] string assetSymbol, [FromForm] string amountUSD, [FromForm] string averagePrice)
         {
             bool isSuccessful = false;
+
+            var query = "SELECT * FROM c";
+            var allItems = await _cosmosDbService.GetItemsAsync(query);
+
+            var count = allItems.Count();
+
+            var amount = Convert.ToDecimal(amountUSD);
+            var price = Convert.ToDecimal(averagePrice);
+            var quantity = amount / price;
 
             try
             {
                 var investment = new ExistingInvestment
                 {
-                    ID = "1",
+                    ID = (count + 1).ToString(),
                     DbGrouping = "ExistingInvestment",
-                    InvestmentID = "1",
                     UserID = userID,
-                    AssetID = assetID,
-                    AmountUSD = 1000.00M,
-                    Quantity = 10,
-                    AveragePrice = 10,
+                    AssetName = assetName,
+                    AssetSym = assetSymbol,
+                    AmountUSD = amountUSD,
+                    AveragePrice = averagePrice,
+                    Quantity = quantity.ToString(),
                     EntryDt = DateTime.Now,
                     ModifyDt = DateTime.Now,
                     PartitionKey = 1
