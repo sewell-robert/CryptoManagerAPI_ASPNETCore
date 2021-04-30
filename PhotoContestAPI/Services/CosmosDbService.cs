@@ -45,7 +45,7 @@ namespace CryptoManagerAPI.Services
 
         public async Task DeleteItemAsync(string id)
         {
-            await this._container.DeleteItemAsync<ExistingInvestment>(id, new PartitionKey());
+            await this._container.DeleteItemAsync<Task>(id, new PartitionKey(1));
         }
 
         public async Task<ExistingInvestment> GetItemAsync(string id)
