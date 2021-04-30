@@ -60,10 +60,21 @@ namespace CryptoManagerAPI.Controllers
         {
             bool isSuccessful = false;
 
-            var query = "SELECT * FROM c";
+            var query = "SELECT * FROM c ORDER BY c.id DESC";
             var allItems = await _cosmosDbService.GetItemsAsync(query);
 
-            var count = allItems.Count();
+            string id = "";
+            foreach (var item in allItems)
+            {
+                string jsonResult = item.ToString();
+
+                ExistingInvestmentResponseVM vm = new ExistingInvestmentResponseVM();
+                vm = JsonConvert.DeserializeObject<ExistingInvestmentResponseVM>(jsonResult);
+
+                id = (Convert.ToInt32(vm.ID) + 1).ToString();
+
+                break;
+            }
 
             var amount = Convert.ToDecimal(amountUSD);
             var price = Convert.ToDecimal(averagePrice);
@@ -73,7 +84,7 @@ namespace CryptoManagerAPI.Controllers
             {
                 var investment = new ExistingInvestment
                 {
-                    ID = (count + 1).ToString(),
+                    ID = id,
                     DbGrouping = "ExistingInvestment",
                     UserID = userID,
                     AssetName = assetName,
