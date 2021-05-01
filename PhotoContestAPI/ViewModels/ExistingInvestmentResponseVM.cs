@@ -26,8 +26,14 @@ namespace CryptoManagerAPI.ViewModels
         [JsonProperty(PropertyName = "quantity")]
         public string Quantity { get; set; }
 
+        [JsonProperty(PropertyName = "cryptoExchange")]
+        public string CryptoExchange { get; set; }
+
+        [JsonProperty(PropertyName = "transactionType")]
+        public string TransactionType { get; set; }
+
         [JsonProperty(PropertyName = "entryDt")]
-        public DateTime EntryDt { get; set; }
+        public string EntryDt { get; set; }
 
         [JsonProperty(PropertyName = "modifyDt")]
         public DateTime ModifyDt { get; set; }

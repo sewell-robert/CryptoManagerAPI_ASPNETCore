@@ -32,6 +32,12 @@ namespace CryptoManagerAPI.Models
         [JsonProperty(PropertyName = "quantity")]
         public string Quantity { get; set; }
 
+        [JsonProperty(PropertyName = "cryptoExchange")]
+        public string CryptoExchange { get; set; }
+
+        [JsonProperty(PropertyName = "transactionType")]
+        public string TransactionType { get; set; }
+
         [JsonProperty(PropertyName = "entryDt")]
         public DateTime EntryDt { get; set; }
 
@@ -40,5 +46,8 @@ namespace CryptoManagerAPI.Models
 
         [JsonProperty(PropertyName = "partitionKey")]
         public int PartitionKey { get; set; }
+
+        [JsonProperty(PropertyName = "isDeleted")]
+        public bool IsDeleted { get; set; }
     }
 }

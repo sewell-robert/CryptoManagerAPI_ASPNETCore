@@ -34,7 +34,7 @@ namespace CryptoManagerAPI.Controllers
             try
             {
                 username = "'" + username + "'";
-                var query = $"SELECT * FROM c where c.userID = {username} and c.dbGrouping = 'ExistingInvestment'";
+                var query = $"SELECT * FROM c WHERE c.userID = {username} AND c.dbGrouping = 'ExistingInvestment' AND c.isDeleted = false";
                 var allItems = await _cosmosDbService.GetItemsAsync(query);
 
                 ExistingInvestmentResponseVM vm = new ExistingInvestmentResponseVM();
@@ -44,10 +44,22 @@ namespace CryptoManagerAPI.Controllers
 
                     vm = JsonConvert.DeserializeObject<ExistingInvestmentResponseVM>(jsonResult);
 
+                    DateTime entryDt;
+                    DateTime.TryParse(vm.EntryDt, out entryDt);
+
+                    var strEntryDt = entryDt.ToShortDateString();
+
+                    vm.EntryDt = strEntryDt;
+
+                    if (vm.TransactionType != null && vm.TransactionType == "Sold")
+                    {
+                        vm.AmountUSD = "(" + vm.AmountUSD + ")";
+                    }
+
                     vmList.Add(vm);
                 }
 
-                return vmList;
+                return vmList.OrderByDescending(p => p.ID).ToList();
             }
             catch (Exception ex)
             {
@@ -55,26 +67,29 @@ namespace CryptoManagerAPI.Controllers
             }
         }
 
+        // Add Transaction
         [HttpPost]
-        public async Task<bool> Post([FromForm] string userID, [FromForm] string assetName, [FromForm] string assetSymbol, [FromForm] string amountUSD, [FromForm] string averagePrice)
+        public async Task<bool> Post([FromForm] string userID, [FromForm] string assetName, [FromForm] string assetSymbol, [FromForm] string amountUSD, [FromForm] string averagePrice, [FromForm] string cryptoExchange, [FromForm] string transactionType)
         {
             bool isSuccessful = false;
 
             var query = "SELECT * FROM c ORDER BY c.id DESC";
             var allItems = await _cosmosDbService.GetItemsAsync(query);
 
-            string id = "";
-            foreach (var item in allItems)
-            {
-                string jsonResult = item.ToString();
+            var count = allItems.Count();
 
-                ExistingInvestmentResponseVM vm = new ExistingInvestmentResponseVM();
-                vm = JsonConvert.DeserializeObject<ExistingInvestmentResponseVM>(jsonResult);
+            //string id = "";
+            //foreach (var item in allItems)
+            //{
+            //    string jsonResult = item.ToString();
 
-                id = (Convert.ToInt32(vm.ID) + 1).ToString();
+            //    ExistingInvestmentResponseVM vm = new ExistingInvestmentResponseVM();
+            //    vm = JsonConvert.DeserializeObject<ExistingInvestmentResponseVM>(jsonResult);
 
-                break;
-            }
+            //    id = (Convert.ToInt32(vm.ID) + 1).ToString();
+
+            //    break;
+            //}
 
             var amount = Convert.ToDecimal(amountUSD);
             var price = Convert.ToDecimal(averagePrice);
@@ -84,7 +99,7 @@ namespace CryptoManagerAPI.Controllers
             {
                 var investment = new ExistingInvestment
                 {
-                    ID = id,
+                    ID = (count + 1).ToString(),
                     DbGrouping = "ExistingInvestment",
                     UserID = userID,
                     AssetName = assetName,
@@ -92,9 +107,12 @@ namespace CryptoManagerAPI.Controllers
                     AmountUSD = amountUSD,
                     AveragePrice = averagePrice,
                     Quantity = quantity.ToString(),
+                    CryptoExchange = cryptoExchange,
+                    TransactionType = transactionType,
                     EntryDt = DateTime.Now,
                     ModifyDt = DateTime.Now,
-                    PartitionKey = 1
+                    PartitionKey = 1,
+                    IsDeleted = false
                 };
 
                 await _cosmosDbService.AddItemAsync(investment, "ExistingInvestment");
@@ -115,7 +133,11 @@ namespace CryptoManagerAPI.Controllers
         {
             try
             {
-                await _cosmosDbService.DeleteItemAsync(id);
+                var investmentToDelete = await _cosmosDbService.GetItemAsync(id);
+
+                investmentToDelete.IsDeleted = true;
+
+                await _cosmosDbService.UpdateItemAsync(investmentToDelete, "ExistingInvestment");
 
                 return true;
             }
