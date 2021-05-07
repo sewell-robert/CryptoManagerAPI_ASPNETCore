@@ -9,7 +9,7 @@ namespace CryptoManagerAPI.ViewModels
     public class ExistingInvestmentResponseVM
     {
         [JsonProperty(PropertyName = "id")]
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         [JsonProperty(PropertyName = "assetName")]
         public string AssetName { get; set; }
